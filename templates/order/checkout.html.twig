@@ -1,0 +1,38 @@
+{# {% extends 'base.html.twig' %} #}
+
+{% block title %}Passer à la commande{% endblock %}
+
+{% block body %}
+    <h1>Passer à la commande</h1>
+
+    {% if cartItems is empty %}
+        <p>Votre panier est vide. Vous ne pouvez pas passer à la commande.</p>
+        <a href="{{ path('app_home') }}" class="btn btn-primary">Retour à la boutique</a>
+    {% else %}
+        <form action="{{ path('order_create') }}" method="POST">
+            <div class="form-group">
+                <label for="name">Nom :</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="adress">Adresse de livraison :</label>
+                <input type="text" id="adress" name="adress" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="payment_method">Méthode de paiement :</label>
+                <select id="payment_method" name="payment_method" class="form-control" required>
+                    <option value="credit_card">Carte de crédit</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <div class="cart-total">
+                <p><strong>Total : </strong>{{ total(cartItems) }} €</p>
+            </div>
+
+            <button type="submit" class="btn btn-success">Valider la commande</button>
+        </form>
+    {% endif %}
+{% endblock %}

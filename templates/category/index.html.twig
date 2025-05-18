@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+    <h1>Liste des Catégories</h1>
+
+    <div class="category-list">
+        {% for category in categories %}
+            <div class="category-card">
+                <h2>
+                    <a href="{{ path('product_by_category', { slug: category.slug }) }}">
+                        {{ category.name }}
+                    </a>
+                </h2>
+            </div>
+        {% else %}
+            <p>Aucune catégorie disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Produits{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Nos Produits</h1>
+
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3 mb-4">
+                    <a href="{{ path('product_show', { 'slug': product.slug }) }}" class="card-link">
+                        <div class="card h-100 shadow-sm">
+                            <img src="{{ asset('images/' ~ product.image) }}" alt="{{ product.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description|striptags|slice(0, 100) }}{% if product.description|length > 100 %}...{% endif %}</p>
+                                <p class="card-text"><strong>{{ product.price }} €</strong></p>
+                                {# <a href="{{ path('product_show', { 'slug': product.slug }) }}" class="btn btn-primary mt-auto">Voir le produit</a> #}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="text-center">Aucun produit disponible pour le moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

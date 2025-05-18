@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ asset('images/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description|striptags }}</p>
+            <h4 class="text-primary">{{ product.price }} €</h4>
+
+            <form method="post" action="{{ path('add_to_cart', { slug: product.slug }) }}">
+                <div class="mb-3">
+                    <label for="size" class="form-label">Choisissez une taille</label>
+                    <select name="size" id="size" class="form-select" required>
+                        <option value="" disabled selected>-- Taille --</option>
+                        {% for size in ['XS', 'S', 'M', 'L', 'XL'] %}
+                            <option value="{{ size }}">{{ size }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Ajouter au panier</button>
+                {# <a href="{{ path('app_home') }}" class="btn btn-outline-secondary ms-2">Retour à l'accueil</a> #}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

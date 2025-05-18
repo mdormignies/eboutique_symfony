@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4">Merci pour votre commande !</h1>
+
+    <p>Votre commande numéro <strong>#{{ order.id }}</strong> a été enregistrée avec succès.</p>
+
+    <h2>Détails de la commande :</h2>
+    <ul>
+        {% for item in order.orderItems %}
+            <li>{{ item.quantity }} x {{ item.product.name }} (Taille: {{ item.taille }}) - {{ item.price * item.quantity }} €</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Total :</strong> {{ order.total }} €</p>
+    <p><strong>Frais de port :</strong> {{ order.shippingPrice }} €</p>
+    <p><strong>Statut :</strong> {{ order.status }}</p>
+</div>
+{% endblock %}

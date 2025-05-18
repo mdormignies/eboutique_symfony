@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - MOON{% endblock %}
+
+{% block body %}
+<div class="container py-5" style="max-width: 500px;">
+    <h1 class="mb-4 text-center">Connexion</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="alert alert-info">
+            Connecté en tant que {{ app.user.userIdentifier }},
+            <a href="{{ path('app_logout') }}">se déconnecter</a>.
+        </div>
+    {% endif %}
+
+    <form method="post">
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+        </div>
+
+        <div class="mb-3">
+            <label for="inputPassword" class="form-label">Mot de passe</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="_remember_me" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">Connexion</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="{{ path('app_register') }}">Pas encore inscrit ?</a>
+    </div>
+</div>
+{% endblock %}

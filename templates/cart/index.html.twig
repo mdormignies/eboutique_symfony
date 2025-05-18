@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4">Votre panier</h1>
+
+    {% if cartItems is empty %}
+        <div class="alert alert-info">Votre panier est vide.</div>
+    {% else %}
+        <table class="table table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Produit</th>
+                    <th>Taille</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cartItems %}
+                    <tr>
+                        <td class="d-flex align-items-center gap-3">
+                            <img src="{{ asset('images/' ~ item.product.image) }}" alt="{{ item.product.name }}" style="width: 200px; height: auto; object-fit: cover; border-radius: 8px;">
+                            <div>
+                                <strong>{{ item.product.name }}</strong>
+                            </div>
+                        </td>
+                        <td>{{ item.size }}</td>
+                        <td>{{ item.product.price }} €</td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="{{ path('decrease_quantity', { key: item.key }) }}" class="btn btn-sm btn-outline-secondary">-</a>
+                                <span>{{ item.quantity }}</span>
+                                <a href="{{ path('increase_quantity', { key: item.key }) }}" class="btn btn-sm btn-outline-primary">+</a>
+                            </div>
+                        </td>
+                        <td>{{ item.product.price * item.quantity }} €</td>
+                        <td>
+                            <a href="{{ path('remove_from_cart', { key: item.key }) }}" class="btn btn-danger btn-sm">Retirer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-end">
+            <h4><strong>Sous-total : </strong>{{ subTotal }} €</h4>
+            <h5><strong>Frais de port (5%) : </strong>{{ shippingCost }} €</h5>
+            <h4><strong>Total : </strong>{{ total }} €</h4>
+            <a href="{{ path('app_order_checkout') }}" class="btn btn-success mt-2">Passer à la commande</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
